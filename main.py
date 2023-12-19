@@ -34,7 +34,7 @@ def sendEmail(message:str,receiver:str=os.environ['MAILTO'],subject:str=''):
     msg['from'] = sender    #自己的邮件地址
     smtp = smtplib.SMTP()
     try :
-        smtp.connect(smtpserver) # 链接
+        smtp.connect(smtpserver,465) # 链接
         smtp.login(username, password) # 登陆
         smtp.sendmail(sender, receiver, msg.as_string()) #发送
         print('邮件发送成功')
@@ -64,7 +64,7 @@ def sumTweets(prompt:str,lang = '中文',length:int = 10000, model='openai/gpt-3
         df['timestamp'] = df['published'].apply(lambda x: pd.Timestamp(x).timestamp())
         if not 'i/lists' in user:
             df = df.reindex(index=df.index[::-1])
-        compareTime = datetime.now(datetime.UTC) - timedelta(minutes=minutes)
+        compareTime = datetime.utcnow() - timedelta(minutes=minutes)
         compareTime = pd.Timestamp(compareTime).timestamp()
         df = df[df['timestamp'] > compareTime]
         if len(df) == 0:
