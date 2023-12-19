@@ -64,7 +64,7 @@ def sumTweets(prompt:str,lang = '中文',length:int = 10000, model='openai/gpt-3
         df['timestamp'] = df['published'].apply(lambda x: pd.Timestamp(x).timestamp())
         if not 'i/lists' in user:
             df = df.reindex(index=df.index[::-1])
-        compareTime = datetime.utcnow() - timedelta(minutes=minutes)
+        compareTime = datetime.now(datetime.UTC) - timedelta(minutes=minutes)
         compareTime = pd.Timestamp(compareTime).timestamp()
         df = df[df['timestamp'] > compareTime]
         if len(df) == 0:
