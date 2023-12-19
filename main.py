@@ -36,12 +36,16 @@ def sendEmail(message:str,receiver:str=os.environ['MAILTO'],subject:str=''):
     try :
         #smtp.connect(smtpserver) # 链接
         smtp = smtplib.SMTP_SSL(host=smtpserver, port=465)
+        print('连接成功')
         smtp.login(username, password) # 登陆
+        print('登陆成功')
         smtp.sendmail(sender, receiver, msg.as_string()) #发送
         print('邮件发送成功')
     except smtplib.SMTPException:
+        print(smtplib.SMTPException)
         print('邮件发送失败')
-    smtp.quit() # 结束
+    finally:
+        smtp.quit() # 结束
 
 def sumTweets(prompt:str,lang = '中文',length:int = 10000, model='openai/gpt-3.5-turbo-1106',mail=True,render=True):
     '''
